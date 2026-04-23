@@ -1,0 +1,8 @@
+com\universite\repository\EtudiantRepository.class
+com\universite\service\EtudiantService.class
+com\universite\config\CorsFilter.class
+com\universite\servlet\LoginServlet.class
+com\universite\servlet\InscriptionServlet.class
+com\universite\model\Etudiant.class
+com\universite\config\DatabaseConfig.class
+com\universite\config\DatabaseInitializer.class
