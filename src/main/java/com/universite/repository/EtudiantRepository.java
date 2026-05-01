@@ -1,13 +1,17 @@
 package com.universite.repository;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.universite.config.DatabaseConfig;
 import com.universite.model.Etudiant;
 
 public class EtudiantRepository {
 
     public boolean existsByCin(String cin) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM users WHERE cin = ?";
+        String sql = "SELECT COUNT(*) FROM user WHERE cin = ?";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, cin);
@@ -18,7 +22,7 @@ public class EtudiantRepository {
     }
 
     public boolean existsByEmail(String email) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM user WHERE email = ?";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, email);
@@ -32,9 +36,9 @@ public class EtudiantRepository {
         Connection conn = DatabaseConfig.getConnection();
         conn.setAutoCommit(false);
         try {
-            // 1. Insérer dans users
-            String sqlUser = "INSERT INTO users (cin, nom, prenom, email, password, adresse, telephone, photo_etd, photo_cin, demande_status, role) " +
-                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'EN_ATTENTE', 'ETUDIANT')";
+            String sqlUser =
+                "INSERT INTO user (cin, nom, prenom, email, password, adresse, telephone, demandestatus, role) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, 'en_attente', 'ETUDIANT')";
             try (PreparedStatement ps = conn.prepareStatement(sqlUser)) {
                 ps.setString(1, e.getCin());
                 ps.setString(2, e.getNom());
@@ -43,16 +47,15 @@ public class EtudiantRepository {
                 ps.setString(5, e.getPassword());
                 ps.setString(6, e.getAdresse());
                 ps.setString(7, e.getTelephone());
-                ps.setString(8, e.getPhotoEtd());
-                ps.setString(9, e.getPhotoCin());
                 ps.executeUpdate();
             }
 
-            // 2. Insérer dans etudiants
-            String sqlEtudiant = "INSERT INTO etudiants (cin, niveau) VALUES (?, ?)";
+        String sqlEtudiant = "INSERT INTO etudiant (cin, niveau, speciality) VALUES (?, ?, ?)";
             try (PreparedStatement ps = conn.prepareStatement(sqlEtudiant)) {
                 ps.setString(1, e.getCin());
                 ps.setString(2, e.getNiveau());
+                ps.setString(3, e.getSpecialite()); 
+
                 ps.executeUpdate();
             }
 
@@ -69,9 +72,10 @@ public class EtudiantRepository {
     }
 
     public Etudiant findByCin(String cin) throws SQLException {
-        String sql = "SELECT u.*, e.niveau FROM users u " +
-                     "JOIN etudiants e ON u.cin = e.cin " +
-                     "WHERE u.cin = ? AND u.role = 'ETUDIANT'";
+        String sql =
+            "SELECT u.*, e.niveau FROM user u " +
+            "JOIN etudiant e ON u.cin = e.cin " +
+            "WHERE u.cin = ? AND u.role = 'ETUDIANT'";
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, cin);
@@ -86,9 +90,7 @@ public class EtudiantRepository {
                 etudiant.setAdresse(rs.getString("adresse"));
                 etudiant.setTelephone(rs.getString("telephone"));
                 etudiant.setNiveau(rs.getString("niveau"));
-                etudiant.setPhotoCin(rs.getString("photo_cin"));
-                etudiant.setPhotoEtd(rs.getString("photo_etd"));
-                etudiant.setStatut(rs.getString("demande_status"));
+                etudiant.setStatut(rs.getString("demandestatus"));
                 etudiant.setRole(rs.getString("role"));
                 return etudiant;
             }

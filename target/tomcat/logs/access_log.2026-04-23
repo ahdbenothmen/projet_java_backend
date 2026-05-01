@@ -1,6 +1,0 @@
-0:0:0:0:0:0:0:1 - - [23/Apr/2026:09:17:47 +0100] "POST /api/etudiants/inscription HTTP/1.1" 200 123 http-bio-8080-exec-1 1197
-0:0:0:0:0:0:0:1 - - [23/Apr/2026:09:26:53 +0100] "POST /api/etudiants/inscription HTTP/1.1" 200 123 http-bio-8080-exec-3 128
-0:0:0:0:0:0:0:1 - - [23/Apr/2026:09:27:36 +0100] "OPTIONS /api/etudiants/login HTTP/1.1" 200 - http-bio-8080-exec-4 1
-0:0:0:0:0:0:0:1 - - [23/Apr/2026:09:27:36 +0100] "POST /api/etudiants/login HTTP/1.1" 200 121 http-bio-8080-exec-5 85
-0:0:0:0:0:0:0:1 - - [23/Apr/2026:09:45:18 +0100] "POST /api/etudiants/inscription HTTP/1.1" 200 60 http-bio-8080-exec-7 86
-0:0:0:0:0:0:0:1 - - [23/Apr/2026:09:46:34 +0100] "POST /api/etudiants/inscription HTTP/1.1" 200 123 http-bio-8080-exec-9 255

@@ -1,5 +1,7 @@
 com\universite\repository\EtudiantRepository.class
 com\universite\service\EtudiantService.class
+com\universite\servlet\PrerequisServlet.class
+com\universite\servlet\InscriptionModuleServlet.class
 com\universite\config\CorsFilter.class
 com\universite\servlet\LoginServlet.class
 com\universite\servlet\InscriptionServlet.class

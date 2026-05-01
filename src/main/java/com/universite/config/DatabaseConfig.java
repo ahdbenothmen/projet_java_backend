@@ -14,7 +14,6 @@ public class DatabaseConfig {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("✅ Driver MySQL chargé !");
-            DatabaseInitializer.init();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("MySQL Driver introuvable !", e);
         }

@@ -3,7 +3,9 @@ package com.universite.service;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.mindrot.jbcrypt.BCrypt;
+
 import com.universite.model.Etudiant;
 import com.universite.repository.EtudiantRepository;
 
@@ -14,7 +16,6 @@ public class EtudiantService {
     public Map<String, Object> inscrire(Etudiant etudiant) {
         Map<String, Object> result = new HashMap<>();
         try {
-            // Validation
             if (etudiant.getCin() == null || etudiant.getCin().trim().isEmpty()) {
                 result.put("success", false);
                 result.put("message", "Le CIN est obligatoire.");
@@ -31,21 +32,18 @@ public class EtudiantService {
                 return result;
             }
 
-            // Vérifier CIN
             if (repository.existsByCin(etudiant.getCin().trim())) {
                 result.put("success", false);
                 result.put("message", "Ce numéro CIN est déjà utilisé.");
                 return result;
             }
 
-            // Vérifier Email
             if (repository.existsByEmail(etudiant.getEmail().trim())) {
                 result.put("success", false);
                 result.put("message", "Cet email est déjà utilisé.");
                 return result;
             }
 
-            // Hasher mot de passe
             String hashedPassword = BCrypt.hashpw(etudiant.getPassword(), BCrypt.gensalt());
             etudiant.setPassword(hashedPassword);
             etudiant.setCin(etudiant.getCin().trim());
@@ -87,13 +85,14 @@ public class EtudiantService {
                 return result;
             }
 
-            if ("EN_ATTENTE".equals(etudiant.getStatut())) {
+            // ← en minuscule comme dans la BD
+            if ("en_attente".equals(etudiant.getStatut())) {
                 result.put("success", false);
                 result.put("message", "Votre compte est en attente de vérification par l'administrateur. Veuillez patienter.");
                 return result;
             }
 
-            if ("REJETE".equals(etudiant.getStatut())) {
+            if ("rejete".equals(etudiant.getStatut())) {
                 result.put("success", false);
                 result.put("message", "Votre demande d'inscription a été rejetée. Veuillez contacter l'administration.");
                 return result;

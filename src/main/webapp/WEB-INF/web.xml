@@ -36,5 +36,23 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/etudiants/login</url-pattern>
   </servlet-mapping>
+<!-- Prerequis -->
+<servlet>
+  <servlet-name>PrerequisServlet</servlet-name>
+  <servlet-class>com.universite.servlet.PrerequisServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>PrerequisServlet</servlet-name>
+  <url-pattern>/prerequis</url-pattern>
+</servlet-mapping>
 
+<!-- Inscription module -->
+<servlet>
+  <servlet-name>InscriptionModuleServlet</servlet-name>
+  <servlet-class>com.universite.servlet.InscriptionModuleServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>InscriptionModuleServlet</servlet-name>
+  <url-pattern>/inscription-module</url-pattern>
+</servlet-mapping>
 </web-app>

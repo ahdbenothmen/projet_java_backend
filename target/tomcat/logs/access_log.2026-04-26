@@ -1,0 +1,2 @@
+0:0:0:0:0:0:0:1 - - [26/Apr/2026:00:00:29 +0100] "OPTIONS /api/etudiants/login HTTP/1.1" 200 - http-bio-8080-exec-6 1
+0:0:0:0:0:0:0:1 - - [26/Apr/2026:00:00:29 +0100] "POST /api/etudiants/login HTTP/1.1" 200 201 http-bio-8080-exec-7 85

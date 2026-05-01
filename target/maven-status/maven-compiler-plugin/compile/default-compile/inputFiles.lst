@@ -4,5 +4,7 @@ C:\Users\ghada\universite-backend\src\main\java\com\universite\config\DatabaseIn
 C:\Users\ghada\universite-backend\src\main\java\com\universite\model\Etudiant.java
 C:\Users\ghada\universite-backend\src\main\java\com\universite\repository\EtudiantRepository.java
 C:\Users\ghada\universite-backend\src\main\java\com\universite\service\EtudiantService.java
+C:\Users\ghada\universite-backend\src\main\java\com\universite\servlet\InscriptionModuleServlet.java
 C:\Users\ghada\universite-backend\src\main\java\com\universite\servlet\InscriptionServlet.java
 C:\Users\ghada\universite-backend\src\main\java\com\universite\servlet\LoginServlet.java
+C:\Users\ghada\universite-backend\src\main\java\com\universite\servlet\PrerequisServlet.java

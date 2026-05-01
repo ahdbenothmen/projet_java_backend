@@ -15,7 +15,7 @@ public class Etudiant {
     private String statut;
     private String role;
     private String dateInscription;
-
+    private String specialite;
     public Etudiant() {}
 
     public String getCin() { return cin; }
@@ -30,6 +30,7 @@ public class Etudiant {
     public String getPhotoEtd() { return photoEtd; }
     public String getStatut() { return statut; }
     public String getRole() { return role; }
+    public String getSpecialite() { return specialite; }
     public String getDateInscription() { return dateInscription; }
 
     public void setCin(String cin) { this.cin = cin; }
@@ -45,4 +46,6 @@ public class Etudiant {
     public void setStatut(String statut) { this.statut = statut; }
     public void setRole(String role) { this.role = role; }
     public void setDateInscription(String dateInscription) { this.dateInscription = dateInscription; }
+    public void setSpecialite(String specialite) { this.specialite = specialite; }
+
 }

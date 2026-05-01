@@ -1,16 +1,26 @@
 package com.universite.servlet;
 
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
-import com.google.gson.Gson;
-import com.universite.model.Etudiant;
-import com.universite.service.EtudiantService;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import com.google.gson.Gson;
+import com.universite.model.Etudiant;
+import com.universite.service.EtudiantService;
 
 public class InscriptionServlet extends HttpServlet {
 
@@ -58,6 +68,7 @@ public class InscriptionServlet extends HttpServlet {
             etudiant.setAdresse(fields.getOrDefault("adresse", ""));
             etudiant.setTelephone(fields.getOrDefault("telephone", ""));
             etudiant.setNiveau(fields.get("niveau"));
+            etudiant.setSpecialite(fields.getOrDefault("specialite", "")); // ← AJOUTEZ
 
             String nomPhotoCin = saveFile(files.get("photoCin"));
             String nomPhotoEtd = saveFile(files.get("photoEtd"));
