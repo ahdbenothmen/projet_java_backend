@@ -1,0 +1,8 @@
+com\universite\servlet\SigninProfesseurServlet.class
+com\universite\servlet\LoginProfesseurServlet.class
+com\universite\dao\ProfesseurDAO.class
+com\universite\model\Professeur.class
+com\universite\config\DBConnection.class
+com\universite\model\User.class
+com\universite\config\DatabaseInitializer.class
+com\universite\filter\CORSFilter.class
