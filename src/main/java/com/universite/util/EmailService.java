@@ -9,7 +9,7 @@ public class EmailService {
     private static final String HOST     = "smtp.gmail.com";
     private static final int    PORT     = 587;
     private static final String USERNAME = "manoubauniversity6@gmail.com"; 
-    private static final String PASSWORD = "wxojxemxfrjcqnos";    
+    private static final String PASSWORD = "";    
 
     public static void sendEmail(String to, String subject, String htmlBody) throws Exception {
         Properties props = new Properties();
