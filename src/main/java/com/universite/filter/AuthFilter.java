@@ -20,8 +20,10 @@ public class AuthFilter implements Filter {
         "/api/signin/professeur",
         "/api/signin/etudiant",
         "/api/login/professeur",
-        "/api/login/etudiant",
+        "/api/etudiants/inscription",
         "/api/admin/login",
+        "/api/login/etudiant"
+
     };
 
     @Override

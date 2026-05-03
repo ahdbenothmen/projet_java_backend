@@ -175,9 +175,9 @@ protected void doPut(HttpServletRequest req, HttpServletResponse resp)
         new Thread(() -> {
             try {
                 if ("approuve".equals(finalStatus)) {
-                    EmailService.sendApproval(finalEmail, finalPrenom, finalNom);
+                    EmailService.sendApproval(finalEmail, finalPrenom, finalNom, "professeur");
                 } else {
-                    EmailService.sendRejection(finalEmail, finalPrenom, finalNom);
+                    EmailService.sendRejection(finalEmail, finalPrenom, finalNom, "professeur");
                 }
             } catch (Exception e) {
                 System.err.println("Erreur envoi email: " + e.getMessage());

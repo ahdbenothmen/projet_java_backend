@@ -3,6 +3,8 @@ package com.universite.config;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -22,6 +24,7 @@ import jakarta.servlet.annotation.WebListener;
 @WebListener
 public class DatabaseInitializer implements ServletContextListener {
  
+    private static final Logger LOGGER = Logger.getLogger(DatabaseInitializer.class.getName());
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("=== Démarrage application – initialisation DB ===");
@@ -55,8 +58,7 @@ public class DatabaseInitializer implements ServletContextListener {
             System.out.println("=== Initialisation DB terminée avec succès ===");
  
         } catch (Exception e) {
-            System.err.println(" Erreur initialisation DB : " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Erreur initialisation DB : " + e.getMessage(), e);
         }
     }
  
