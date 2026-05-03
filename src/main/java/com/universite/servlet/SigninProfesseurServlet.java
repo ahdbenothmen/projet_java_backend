@@ -1,11 +1,18 @@
 package com.universite.servlet;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import com.universite.dao.ProfesseurDAO;
 import com.universite.model.Professeur;
+
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import java.io.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 @WebServlet("/api/signin/professeur")
 @MultipartConfig(maxFileSize = 10485760, maxRequestSize = 20971520)
@@ -16,7 +23,6 @@ public class SigninProfesseurServlet extends HttpServlet {
             throws IOException {
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
-        res.setHeader("Access-Control-Allow-Origin", "*");
 
         try {
             String cin        = req.getParameter("cin");
@@ -72,11 +78,5 @@ public class SigninProfesseurServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-        res.setHeader("Access-Control-Allow-Headers", "*");
-        res.setStatus(200);
-    }
+   
 }

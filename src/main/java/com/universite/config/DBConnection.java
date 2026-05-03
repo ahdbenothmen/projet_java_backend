@@ -15,7 +15,7 @@ public class DBConnection {
     private static final String DB_URL =
         "jdbc:mysql://localhost:3306/universite_db?useSSL=false&serverTimezone=UTC";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "";
+    private static final String DB_PASSWORD = "lnnaya";
 
     static {
         try {

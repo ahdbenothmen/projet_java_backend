@@ -17,17 +17,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/api/professeurs/search")
 public class ProfesseurSearchServlet extends HttpServlet {
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        setCors(resp);
-        resp.setStatus(HttpServletResponse.SC_OK);
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        setCors(resp);
         resp.setContentType("application/json;charset=UTF-8");
 
         String q = req.getParameter("q");
@@ -90,11 +83,6 @@ public class ProfesseurSearchServlet extends HttpServlet {
         }
     }
 
-    private void setCors(HttpServletResponse resp) {
-        resp.setHeader("Access-Control-Allow-Origin",  "http://localhost:3000");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    }
 
     private String escape(String s) {
         if (s == null) return "";

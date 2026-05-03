@@ -1,11 +1,16 @@
 package com.universite.servlet;
 
+import java.io.IOException;
+
+import org.json.JSONObject;
+
 import com.universite.dao.ProfesseurDAO;
 import com.universite.model.Professeur;
+
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
-import java.io.*;
-import org.json.JSONObject;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/api/login/professeur")
 public class LoginProfesseurServlet extends HttpServlet {
@@ -40,13 +45,9 @@ public class LoginProfesseurServlet extends HttpServlet {
             String statut = p.getStatut() == null ? "" : p.getStatut().trim();
             System.out.println("=== STATUT RECU: '" + statut + "' ===");
 
-            if (statut.equals("en attente")) {
+            if (statut.equals("en_attente")) {
                 res.getWriter().write(
                     "{\"success\":false,\"message\":\"Votre compte est en attente de vérification par l'administrateur. Veuillez patienter.\"}"
-                );
-            } else if (statut.equals("en cours")) {
-                res.getWriter().write(
-                    "{\"success\":false,\"message\":\"Votre demande est en cours de traitement par l'administrateur.\"}"
                 );
             } else if (statut.equals("rejete")) {
                 res.getWriter().write(

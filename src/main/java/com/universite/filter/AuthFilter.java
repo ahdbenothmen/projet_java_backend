@@ -16,36 +16,55 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebFilter("/api/*")
 public class AuthFilter implements Filter {
 
+    private static final String[] PUBLIC_PATHS = {
+        "/api/signin/professeur",
+        "/api/signin/etudiant",
+        "/api/login/professeur",
+        "/api/login/etudiant",
+        "/api/admin/login",
+    };
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletRequest req   = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        String path = req.getRequestURI();
+        resp.setHeader("Access-Control-Allow-Origin",  "http://localhost:3000");
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-        // laisser login libre
-        if (path.contains("/api/admin/login")) {
-            chain.doFilter(request, response);
+        // ✅ Laisser passer les preflight OPTIONS sans vérification
+        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+            resp.setStatus(HttpServletResponse.SC_OK);
             return;
+        }
+
+        String path = req.getRequestURI();
+        for (String publicPath : PUBLIC_PATHS) {
+            if (path.contains(publicPath)) {
+                chain.doFilter(req, resp);
+                return;
+            }
         }
 
         String authHeader = req.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             resp.setStatus(401);
+            resp.setContentType("application/json;charset=UTF-8");
             resp.getWriter().write("{\"error\":\"Token manquant\"}");
             return;
         }
 
         String token = authHeader.substring(7);
-
         try {
             TokenUtil.verifyToken(token);
-            chain.doFilter(request, response); // OK
+            chain.doFilter(request, response);
         } catch (Exception e) {
             resp.setStatus(401);
+            resp.setContentType("application/json;charset=UTF-8");
             resp.getWriter().write("{\"error\":\"Token invalide\"}");
         }
     }
