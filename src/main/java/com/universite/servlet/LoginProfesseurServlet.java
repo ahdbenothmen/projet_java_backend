@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.universite.dao.ProfesseurDAO;
 import com.universite.model.Professeur;
+import com.universite.util.TokenUtil;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -53,15 +54,18 @@ public class LoginProfesseurServlet extends HttpServlet {
                 res.getWriter().write(
                     "{\"success\":false,\"message\":\"Votre compte a été rejeté. Contactez l'administration.\"}"
                 );
-            } else if (statut.equals("approuve")) {
-                res.getWriter().write(
-                    "{\"success\":true," +
-                    "\"nom\":\"" + p.getNom() + "\"," +
-                    "\"prenom\":\"" + p.getPrenom() + "\"," +
-                    "\"cin\":\"" + p.getCin() + "\"}"
-                );
-            } else {
-                res.getWriter().write(
+            }  else if (statut.equals("approuve")) {
+                    String token = TokenUtil.generateToken(p.getEmail());
+                    res.getWriter().write(
+                        "{\"success\":true," +
+                        "\"token\":\"" + token + "\"," +
+                        "\"nom\":\"" + p.getNom() + "\"," +
+                        "\"prenom\":\"" + p.getPrenom() + "\"," +
+                        "\"cin\":\"" + p.getCin() + "\"," +
+                        "\"email\":\"" + p.getEmail() + "\"}"
+                    );
+                } else {
+                                                res.getWriter().write(
                     "{\"success\":false,\"message\":\"Statut inconnu: " + statut + ". Contactez l'administration.\"}"
                 );
             }

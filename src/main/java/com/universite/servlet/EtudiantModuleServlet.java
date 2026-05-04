@@ -19,77 +19,84 @@ import jakarta.servlet.http.HttpServletResponse;
 public class EtudiantModuleServlet extends HttpServlet {
 
     // GET /api/etudiant/modules?cin=XXX → liste tous les modules avec statut inscription
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        resp.setContentType("application/json;charset=UTF-8");
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException, IOException {
+    resp.setContentType("application/json;charset=UTF-8");
 
-        String cin = getCinFromToken(req, resp);
-        if (cin == null) return;
+    String cin = getCinFromToken(req, resp);
+    if (cin == null) return;
 
-        String sql =
-            "SELECT m.id, m.nom, m.coefficient, " +
-            "       u.nom AS prof_nom, u.prenom AS prof_prenom, " +
-            "       (SELECT COUNT(*) FROM etudiant_module em WHERE em.etudiant_cin = ? AND em.module_id = m.id) AS inscrit " +
-            "FROM module m " +
-            "JOIN professeur p ON m.professeur_cin = p.cin " +
-            "JOIN user u ON p.cin = u.cin " +
-            "ORDER BY m.id";
+    // ← Ajouter em.note et LEFT JOIN etudiant_module
+    String sql =
+        "SELECT m.id, m.nom, m.coefficient, " +
+        "       u.nom AS prof_nom, u.prenom AS prof_prenom, " +
+        "       em.note, " +
+        "       (em.etudiant_cin IS NOT NULL) AS inscrit " +
+        "FROM module m " +
+        "JOIN professeur p ON m.professeur_cin = p.cin " +
+        "JOIN user u ON p.cin = u.cin " +
+        "LEFT JOIN etudiant_module em ON em.module_id = m.id AND em.etudiant_cin = ? " +
+        "ORDER BY m.id";
 
-        String sqlPrereq =
-            "SELECT id, nom, isObligatoire FROM prerequis WHERE module_id = ?";
+    String sqlPrereq =
+        "SELECT id, nom, isObligatoire FROM prerequis WHERE module_id = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, cin);
-            ResultSet rs = ps.executeQuery();
+        ps.setString(1, cin); // ← un seul paramètre maintenant
 
-            StringBuilder json = new StringBuilder("[");
-            boolean first = true;
+        ResultSet rs = ps.executeQuery();
+        StringBuilder json = new StringBuilder("[");
+        boolean first = true;
 
-            while (rs.next()) {
-                if (!first) json.append(",");
-                first = false;
+        while (rs.next()) {
+            if (!first) json.append(",");
+            first = false;
 
-                int moduleId = rs.getInt("id");
-                boolean inscrit = rs.getInt("inscrit") > 0;
+            int moduleId = rs.getInt("id");
+            boolean inscrit = rs.getBoolean("inscrit");
+            Object note = rs.getObject("note"); // ← null si pas de note
 
-                // Charger les prérequis de ce module
-                StringBuilder prereqs = new StringBuilder("[");
-                boolean firstP = true;
-                try (PreparedStatement psp = conn.prepareStatement(sqlPrereq)) {
-                    psp.setInt(1, moduleId);
-                    ResultSet rsp = psp.executeQuery();
-                    while (rsp.next()) {
-                        if (!firstP) prereqs.append(",");
-                        firstP = false;
-                        prereqs.append("{")
-                            .append("\"id\":").append(rsp.getInt("id")).append(",")
-                            .append("\"nom\":\"").append(escape(rsp.getString("nom"))).append("\",")
-                            .append("\"obligatoire\":").append(rsp.getBoolean("isObligatoire"))
-                            .append("}");
-                    }
+            // Charger les prérequis
+            StringBuilder prereqs = new StringBuilder("[");
+            boolean firstP = true;
+            try (PreparedStatement psp = conn.prepareStatement(sqlPrereq)) {
+                psp.setInt(1, moduleId);
+                ResultSet rsp = psp.executeQuery();
+                while (rsp.next()) {
+                    if (!firstP) prereqs.append(",");
+                    firstP = false;
+                    prereqs.append("{")
+                        .append("\"id\":").append(rsp.getInt("id")).append(",")
+                        .append("\"nom\":\"").append(escape(rsp.getString("nom"))).append("\",")
+                        .append("\"obligatoire\":").append(rsp.getBoolean("isObligatoire"))
+                        .append("}");
                 }
-                prereqs.append("]");
-
-                json.append("{")
-                    .append("\"id\":").append(moduleId).append(",")
-                    .append("\"nom\":\"").append(escape(rs.getString("nom"))).append("\",")
-                    .append("\"coefficient\":").append(rs.getDouble("coefficient")).append(",")
-                    .append("\"professeur\":\"").append(escape(rs.getString("prof_prenom"))).append(" ").append(escape(rs.getString("prof_nom"))).append("\",")
-                    .append("\"inscrit\":").append(inscrit).append(",")
-                    .append("\"prerequis\":").append(prereqs)
-                    .append("}");
             }
-            json.append("]");
-            resp.getWriter().write(json.toString());
+            prereqs.append("]");
 
-        } catch (Exception e) {
-            resp.setStatus(500);
-            resp.getWriter().write("{\"error\":\"" + escape(e.getMessage()) + "\"}");
+            json.append("{")
+                .append("\"id\":").append(moduleId).append(",")
+                .append("\"nom\":\"").append(escape(rs.getString("nom"))).append("\",")
+                .append("\"coefficient\":").append(rs.getDouble("coefficient")).append(",")
+                .append("\"professeur\":\"")
+                    .append(escape(rs.getString("prof_prenom"))).append(" ")
+                    .append(escape(rs.getString("prof_nom"))).append("\",")
+                .append("\"inscrit\":").append(inscrit).append(",")
+                .append("\"note\":").append(note != null ? note : "null").append(",") // ← ajout
+                .append("\"prerequis\":").append(prereqs)
+                .append("}");
         }
+        json.append("]");
+        resp.getWriter().write(json.toString());
+
+    } catch (Exception e) {
+        resp.setStatus(500);
+        resp.getWriter().write("{\"error\":\"" + escape(e.getMessage()) + "\"}");
     }
+}
 
     // POST /api/etudiant/modules/inscrire → inscrire l'étudiant à un module
     @Override

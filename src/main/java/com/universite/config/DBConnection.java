@@ -17,6 +17,7 @@ public class DBConnection {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "lnnaya";
 
+
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

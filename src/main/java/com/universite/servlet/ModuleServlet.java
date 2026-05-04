@@ -56,6 +56,7 @@ public class ModuleServlet extends HttpServlet {
         setCors(resp);
         resp.setContentType("application/json;charset=UTF-8");
         if (!verifierToken(req, resp)) return;
+
         String body = lireBody(req);
 
         String nom         = extraireValeur(body, "nom");

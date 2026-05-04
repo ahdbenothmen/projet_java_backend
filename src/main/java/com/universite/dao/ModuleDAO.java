@@ -21,13 +21,13 @@ public class ModuleDAO {
      * Récupère tous les modules avec leurs prérequis.
      * Retourne une liste de Map prête à sérialiser en JSON.
      */
-    public List<Map<String, Object>> getAllModules() throws SQLException {
-String sql = "SELECT m.id, m.nom, m.coefficient, m.note, " +
-             "       m.admin_id, m.professeur_cin, " +
-             "       u.nom AS professeur_nom, u.prenom AS professeur_prenom " +
-             "FROM module m " +
-             "LEFT JOIN user u ON u.cin = m.professeur_cin " +  // ← user, pas professeur
-             "ORDER BY m.id DESC";
+   public List<Map<String, Object>> getAllModules() throws SQLException {
+    String sql = "SELECT m.id, m.nom, m.coefficient, " +
+                 "       m.admin_id, m.professeur_cin, " +
+                 "       u.nom AS professeur_nom, u.prenom AS professeur_prenom " +
+                 "FROM module m " +
+                 "LEFT JOIN user u ON u.cin = m.professeur_cin " +
+                 "ORDER BY m.id DESC";
 
     List<Map<String, Object>> modules = new ArrayList<>();
 
@@ -40,11 +40,10 @@ String sql = "SELECT m.id, m.nom, m.coefficient, m.note, " +
             module.put("id",               rs.getInt("id"));
             module.put("nom",              rs.getString("nom"));
             module.put("coefficient",      rs.getDouble("coefficient"));
-            module.put("note",             rs.getObject("note"));
             module.put("adminId",          rs.getInt("admin_id"));
             module.put("professeurCin",    rs.getString("professeur_cin"));
-            module.put("professeurNom",    rs.getString("professeur_nom"));    // ← ajout
-            module.put("professeurPrenom", rs.getString("professeur_prenom")); // ← ajout
+            module.put("professeurNom",    rs.getString("professeur_nom"));
+            module.put("professeurPrenom", rs.getString("professeur_prenom"));
             module.put("prerequis",        getPrerequisDuModule(conn, rs.getInt("id")));
             modules.add(module);
         }
@@ -169,14 +168,10 @@ String sql = "SELECT m.id, m.nom, m.coefficient, m.note, " +
             conn.rollback();
             throw e;
         }
-        // pas besoin de finally pour setAutoCommit/close → try-with-resources s'en charge
     }
 }
 
 
-
-
-    // ── Privé ────────────────────────────────────────────────────────────────
 
     private List<Map<String, Object>> getPrerequisDuModule(Connection conn, int moduleId)
             throws SQLException {

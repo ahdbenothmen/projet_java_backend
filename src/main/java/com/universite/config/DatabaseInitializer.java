@@ -135,7 +135,6 @@ public class DatabaseInitializer implements ServletContextListener {
         " id INT PRIMARY KEY AUTO_INCREMENT," +
         " nom VARCHAR(100) NOT NULL," +
         " coefficient DECIMAL(4,2)," +
-        " note DECIMAL(5,2)," +
         " admin_id INT NOT NULL," +
         " professeur_cin VARCHAR(8) NOT NULL," +
         " FOREIGN KEY (admin_id) REFERENCES admin(id) ON DELETE RESTRICT," +
@@ -150,6 +149,8 @@ public class DatabaseInitializer implements ServletContextListener {
             "CREATE TABLE IF NOT EXISTS etudiant_module (" +
             " etudiant_cin VARCHAR(8) NOT NULL," +
             " module_id INT NOT NULL," +
+            " note DECIMAL(5,2)," +
+
             " PRIMARY KEY (etudiant_cin, module_id)," +
             " FOREIGN KEY (etudiant_cin) REFERENCES etudiant(cin) ON DELETE CASCADE," +
             " FOREIGN KEY (module_id) REFERENCES module(id) ON DELETE CASCADE" +

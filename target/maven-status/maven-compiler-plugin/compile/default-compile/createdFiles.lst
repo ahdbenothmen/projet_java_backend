@@ -25,6 +25,9 @@ com/universite/repository/EtudiantRepository.class
 com/universite/servlet/AdminProfesseurServlet.class
 com/universite/filter/CORSFilter.class
 com/universite/model/Professeur.class
+com/universite/servlet/EtudiantsParModuleServlet.class
+com/universite/servlet/SaveNotesServlet.class
+com/universite/servlet/ModulesProfesseurServlet.class
 com/universite/servlet/InscriptionServlet.class
 com/universite/dao/ProfesseurDAO.class
 com/universite/servlet/AdminEtudiantServlet.class
