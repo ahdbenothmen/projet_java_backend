@@ -5,7 +5,6 @@
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/service/EtudiantService.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/LoginServlet.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/AdminProfesseurServlet.java
-/home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/EtudiantProfileServlet.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/util/EmailService.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/LoginAdminServlet.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/InscriptionServlet.java
@@ -13,10 +12,13 @@
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/SigninProfesseurServlet.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/config/DBConnection.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/model/Professeur.java
+/home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/ProfilServlet.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/LoginProfesseurServlet.java
+/home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/AdminStatsServlet.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/filter/AuthFilter.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/dao/ProfesseurDAO.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/model/Admin.java
+/home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/ModuleEtudiantsServlet.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/ProfesseurSearchServlet.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/dao/AdminDAO.java
 /home/yasmin/Downloads/projet_java_backend/src/main/java/com/universite/servlet/ModuleServlet.java

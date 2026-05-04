@@ -4,8 +4,9 @@ com/universite/servlet/LoginProfesseurServlet.class
 com/universite/model/Authentifiable.class
 com/universite/servlet/ProfesseurSearchServlet.class
 com/universite/model/User.class
-com/universite/servlet/EtudiantProfileServlet.class
 com/universite/servlet/SigninProfesseurServlet.class
+com/universite/servlet/ModuleEtudiantsServlet.class
+com/universite/servlet/AdminStatsServlet.class
 com/universite/dao/AdminDAO.class
 com/universite/config/DBConnection.class
 com/universite/config/DatabaseInitializer.class
@@ -14,6 +15,7 @@ com/universite/dao/ModuleDAO.class
 com/universite/servlet/ModuleServlet.class
 com/universite/model/Admin.class
 com/universite/model/Etudiant.class
+com/universite/servlet/ProfilServlet.class
 com/universite/servlet/LoginAdminServlet.class
 com/universite/servlet/EtudiantModuleServlet.class
 com/universite/service/EtudiantService.class

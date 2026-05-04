@@ -45,9 +45,9 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doOptions(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setStatus(200);
-    }
+   @Override
+protected void doOptions(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    response.setStatus(HttpServletResponse.SC_OK);
+}
 }

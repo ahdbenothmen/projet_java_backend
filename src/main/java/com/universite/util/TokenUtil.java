@@ -15,7 +15,7 @@ public class TokenUtil {
         return JWT.create()
                 .withSubject(email)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 3600000)) // 1h
+                .withExpiresAt(new Date(System.currentTimeMillis() + 86400000)) 
                 .sign(Algorithm.HMAC256(SECRET));
     }
 
